@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Towards Real-Time 4K Image Super-Resolution">
+  <meta name="keywords" content="NTIRE, Real-Time, Super-Resolution, 4K">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Towards Real-Time 4K Image Super-Resolution</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./website/static/css/bulma.min.css">
+  <link rel="stylesheet" href="./website/static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./website/static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./website/static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./website/static/css/index.css">
+  <link rel="icon" href="./website/static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./website/static/js/fontawesome.all.min.js"></script>
+  <script src="./website/static/js/bulma-carousel.min.js"></script>
+  <script src="./website/static/js/bulma-slider.min.js"></script>
+  <script src="./website/static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">NTIRE 2023 Real-Time Super-Resolution Challenge</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://eduardzamfir.github.io">Eduard-Sebastian Zamfir,</a></span>
+              <span class="author-block">
+                <a href="https://mv-lab.github.io">Marcos V. Conde,</a></span>
+            <span class="author-block">
+              <a href="https://www.informatik.uni-wuerzburg.de/computervision/home/">Radu Timofte</a>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Computer Vision Lab, University of Wurzburg</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper (Coming Soon)</span>
+                </a>
+              </span>
+              <!--<span class="link-block">
+                <a href="https://arxiv.org"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <!--<span class="link-block">
+                <a href="https://www.youtube.com"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/eduardzamfir/NTIRE23-Real-Time-SR"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://github.com"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Over the past few years, high-definition videos and im- ages in 720p (HD), 1080p (FHD), and 4K (UHD) resolution have become standard. 
+            While higher resolutions offer improved visual quality for users, they pose a significant challenge for super-resolution networks to achieve real-time performance on commercial GPUs. 
+            This paper presents a comprehensive analysis of super-resolution model designs and techniques aimed at efficiently upscaling images from 720p and 1080p resolutions to 4K. 
+            We begin with a simple, effective baseline architecture and gradually modify its design by focusing on extracting important high-frequency details efficiently. 
+            This allows us to subsequently downscale the resolution of deep feature maps, reducing the overall computational footprint, while maintaining high recon- struction fidelity. 
+            We enhance our method by incorporating pixel-unshuffling, a simplified and speed-up reinterpretation of the basic block proposed by NAFNet, along with structural re-parameterization. 
+            We assess the performance of the fastest version of our method in the new NTIRE 2023 Real-Time 4K Super-Resolution challenge and demonstrate its potential in comparison with state-of-the-art efficient super-resolution models when scaled up. 
+            Our method was tested successfully on high-quality content from photography, digital art, and gaming content.
+            <!--The <a rel="license" href="https://cvlai.net/ntire/2023/">8th edition of NTIRE: New Trends in Image Restoration and Enhancement</a>
+            workshop will be held on June 18th, 2023 in conjunction with CVPR 2023. -->
+          </p>
+          <p>
+
+          </p>
+          <p>
+
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./assets/rt4ksr_teaser.png"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        We introduce a new baseline termed RT4KSR for upscaling images from 720p and 1080p input to 4K in real-time at > 60FPS.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{conde2023NTIRERTSR,
+  author    = {Zamfir, Eduard-Sebastian and Conde, Marcos V. and Timofte, Radu},
+  title     = {Towards Real-Time 4K Image Super-Resolution},
+  journal   = {CVPRW},
+  year      = {2023},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is borrowed <a rel="license" href="https://github.com/nerfies/nerfies.github.io">from</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

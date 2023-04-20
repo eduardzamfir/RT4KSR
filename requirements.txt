@@ -1,0 +1,11 @@
+opencv-python==4.6.0.66
+pillow==9.2.0
+scikit-image==0.19.3                
+timm==0.6.12
+numpy
+scipy
+tqdm
+wandb
+matplotlib
+torchmetrics
+kornia
