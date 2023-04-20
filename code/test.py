@@ -1,13 +1,10 @@
 import os
 import glob
 import torch
-import pathlib
-import unittest
 import numpy as np
 import torch.nn.functional as F
-import torchmetrics
-import kornia.color as color
 
+from tqdm import tqdm
 from collections import OrderedDict
 from typing import List, Tuple
 from torch.nn.functional import interpolate
@@ -15,11 +12,10 @@ from torch.nn.functional import interpolate
 import data
 import model
 from utils import image, utils, metrics, parser
-from model.utils import rep_utils
 
 
 def load_checkpoint(model, device, time_stamp=None):       
-    checkpoint = glob.glob(os.path.join("results/checkpoints", time_stamp + ".pth"))
+    checkpoint = glob.glob(os.path.join("code/checkpoints", time_stamp + ".pth"))
     if isinstance(checkpoint, List):
         checkpoint = checkpoint.pop(0)
     checkpoint = torch.load(checkpoint, map_location=device)
@@ -33,11 +29,11 @@ def uint2tensor3(img):
     return torch.from_numpy(np.ascontiguousarray(img)).permute(2, 0, 1).float()
  
 
-def reparameterize(config, model, device, save_rep_checkpoint=False):
+def reparameterize(config, net, device, save_rep_checkpoint=False):
     config.is_train = False
-    rep_model = torch.nn.DataParallel(model.__dict__[config.arch + "_simplified"](config)).to(device)
+    rep_model = torch.nn.DataParallel(model.__dict__[config.arch](config)).to(device)
     rep_state_dict = rep_model.state_dict()
-    pretrained_state_dict = model.state_dict()
+    pretrained_state_dict = net.state_dict()
     
     for k, v in rep_state_dict.items():            
         if "rep_conv.weight" in k:
@@ -103,16 +99,16 @@ def test(config):
     """
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     net = torch.nn.DataParallel(
-        model.__dict__[config.arch + "_" + config._type](config)
+        model.__dict__[config.arch](config)
         ).to(device)
-    model = load_checkpoint(net, device, config.checkpoint_id)
+    net = load_checkpoint(net, device, config.checkpoint_id)
     
     
     if config.rep:
         rep_model = reparameterize()
-        model = rep_model
+        net = rep_model
 
-    model.eval()
+    net.eval()
         
     for benchmark in config.benchmark:
         test_loader = torch.utils.data.DataLoader(
@@ -125,26 +121,26 @@ def test(config):
         )
         with torch.no_grad():
             print("Testing...")   
-            for i, batch in enumerate(test_loader):
+            for batch in tqdm(test_loader):
                 lr_img = batch["lr"].to(device)
                 hr_img = batch["hr"].to(device)
                 
                 # run method
                 if config.bicubic:
-                    out = interpolate(lr_img, scale_factor=config.scale, mode="bicubic", align_corners=False).clamp(min=0, max=255)
+                    out = interpolate(lr_img, scale_factor=config.scale, mode="bicubic", align_corners=False).clamp(min=0, max=1)
                 else:
-                    out = model(lr_img)
-
-                    # compute metrics
-                    test_results["psnr_rgb"].append(psnr(out,hr_img))
-                    test_results["ssim_rgb"].append(ssim(out, hr_img))
+                    out = net(lr_img)
                     
-                    # compute metrics on y channel
-                    out_y = color.rgb_to_y(out)
-                    hr_y = color.rgb_to_y(hr_img)
-                    test_results["psnr_y"].append(psnr(out_y, hr_y))
-                    test_results["ssim_y"].append(ssim(out_y, hr_y))
-
+                out *= 255.
+                out = image.tensor2uint(out)
+                
+                hr_img *= 255.
+                hr_img = image.tensor2uint(hr_img)
+                
+                test_results["psnr_rgb"].append(metrics.calculate_psnr(out, hr_img, crop_border=0))
+                test_results["ssim_rgb"].append(metrics.calculate_ssim(out, hr_img, crop_border=0))
+                test_results["psnr_y"].append(metrics.calculate_psnr(out, hr_img, crop_border=0, test_y_channel=True))
+                test_results["ssim_y"].append(metrics.calculate_ssim(out, hr_img, crop_border=0, test_y_channel=True))
 
             print(f"------> Results of X{config.scale} for benchmark: {benchmark}")
             ave_psnr_rgb = sum(test_results["psnr_rgb"]) / len(test_results["psnr_rgb"])
@@ -159,6 +155,6 @@ def test(config):
         
 
 if __name__ == "__main__":
-    args = parser.test_parser()
+    args = parser.base_parser()
     
     test(args)

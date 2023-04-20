@@ -31,23 +31,12 @@ pip install -r requirements.txt
 ````
 
 ----
-## Train
+## Usage
 
 ### Data Preparation
-For faster I/O, we employ `data/preprocess/extract_subimages.py` to partition the training images into [512x512] segments. Our training dataset includes the complete sets of both [DIV2K](https://data.vision.ee.ethz.ch/cvl/DIV2K/) and Flickr2K images. To compete in the [NTIRE Real-Time 4K Super-Resolution](https://cvlai.net/ntire/2023/) challenge, we add a subset of `1000` and `2500` images from [LSDIR](https://data.vision.ee.ethz.ch/yawli/index.html) (`shard-00`) and [GTA5](https://download.visinf.tu-darmstadt.de/data/from_games/) (`part01`), respectively.
-
-We generate bicubically downscaled LR images online and test our models on the standard benchmarks for Super-Resolution which can be found [here](https://cvnote.ddlee.cc/2019/09/22/image-super-resolution-datasets).
-
-Define the dataset directory as follows:
+We generate bicubically downscaled LR images online and test our models on the standard benchmarks for Super-Resolution which can be found [here](https://cvnote.ddlee.cc/2019/09/22/image-super-resolution-datasets). You can test any SR benchmark using our scripts and model weights for `x2` and `x3` SR. Please follow the dataset directory structure below:
 ````
 dataroot/
-|---DIV2K_Flickr2K/
-|   |---sub/
-|   |   |---train_HR/
-|---GTA5
-|   |---sub/
-|---LSDIR
-|   |---sub/
 |---testsets/
 |   |---set5
 |   |   |---test/
@@ -57,37 +46,20 @@ dataroot/
 ...
 ````
 
-### Define Model Architecture
-You can modify the baseline architecture using following parser arguments:
-- `arch`: `rtsrn`
-- `type`: `base` | `rep`
-- `num-blocks`: int
-- `feature-channels`: int
-- `act-type`: `gelu` | `lrelu` | `relu`
-- `baseblock`: `base` | `dconvbase` | `nafbase` | `repbase` | `simplified`
-- `downscaling`: bool
-- `use-hfb`: bool
-- `use-gaussian`: bool
-- `unshuffle`: bool
-- `layernorm`: bool
-- `residual`: bool
-- `squeeze`: bool
-- `is-train`: bool
-- `eca-gamma`: int
-
-### Run Training
-Train our baseline model for `x2` | `x3` Super-Resolution:
-````
-python main.py --arch rtsrn --type base --num-blocks 4 --feature-channels 24 --act-type gelu --baseblock base --scale [2|3] --crop-size 128 --batch-size 64 --dataset-name dif2k_sub --use-lsdir --lr-init 1e-4 --benchmark set5 set14 b100 urban100 
-````
-
-Train our RT4KSR model for `x2` | `x3` Super-Resolution:
-````
-python main.py --arch rtsrn --type rep --num-blocks 4 --feature-channels 24 --act-type gelu --baseblock simplified --scale [2|3] --crop-size 128 --batch-size 64 --dataset-name dif2k_sub --use-lsdir --lr-init 5e-4 --benchmark set5 set14 b100 urban100 --layernorm --is-train
-````
-With `--use-gta` and `--use-lsdir` you can add additional data to the model training. For enhanced performance, include the auxilary loss function using `--aux-loss` and `--loss-weight 1.0` to the above defined commands. 
-
-After training is done, evaluation on the specified benchmarks will be performed automatically (only `set5`, `set14`, `b100` and `urban100` is supported). Make sure to follow previously described folder structure. In `experiments/` you can find bash scripts for running the baseline and RT4KSR model with default settings. 
-
 ### Test Model
-You can find all the necessary details of testing the models in `test.py`. Make sure to correctly define the architecture.
+You can find all the necessary details of testing the models in `test.py`. The argument `--is-train` is always needed, because the training architecture must be loaded first before reparameterization. Add `--rep` when you want to run the inference using the reparameterized version.
+
+````
+python code/test.py --dataroot [DATAROOT] --checkpoint-id rt4ksr_[x2|x3] --scale [x2|x3] --arch rt4ksr_rep --benchmark ntire23rtsr --is-train
+````
+
+---
+## [NTIRE 2023 4K RTSR Benchmark](https://github.com/eduardzamfir/NTIRE23-RTSR)
+
+
+| Method  | Scale            |PSNR (RGB)| PSNR (Y)| SSIM (RGB) | SSIM (Y) |
+|---------|------------------|----------|---------|------------|----------|
+| Bicubic | x2 (1080p -> 4K) | 33.916   | 36.664  |  0.8829    | 0.9160   |
+|         | x3 (720p -> 4K)  |    | 
+| RT4KSR  | x2 (1080p -> 4K) | 34.193   | 37.013  | 0.8848     | 0.9180   |              
+|         | x3 (720p -> 4K)  | 31.721   | 34.349  | 0.8300     | 0.8715   |

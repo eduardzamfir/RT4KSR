@@ -11,7 +11,7 @@ from model.modules import *
 ####################################
     
    
-class RTSR4K_Rep(nn.Module):
+class RT4KSR_Rep(nn.Module):
     def __init__(self,
                  num_channels, 
                  num_feats, 
@@ -91,9 +91,9 @@ class RTSR4K_Rep(nn.Module):
 # RETURN INITIALIZED MODEL INSTANCES
 ####################################
 
-def rtsrn_rep(config):
+def rt4ksr_rep(config):
     act = activation(config.act_type)
-    model = RTSR4K_Rep(num_channels=3, 
+    model = RT4KSR_Rep(num_channels=3, 
                        num_feats=config.feature_channels, 
                        num_blocks=config.num_blocks, 
                        upscale=config.scale,

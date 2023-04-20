@@ -10,11 +10,11 @@ def base_parser():
     parser.add_argument("--dataroot", type=str, default=os.path.join(pathlib.Path.home(), "datasets/image_restoration"))
     parser.add_argument("--benchmark", type=str, nargs="+", default=["ntire23rtsr"])
     parser.add_argument("--checkpoints-root", type=str, default="code/checkpoints")
-    parser.add_argument("--checkpoint-id", type=str)
+    parser.add_argument("--checkpoint-id", type=str, default="rt4ksr_x2")
     
     # model definitions
-    parser.add_argument("--arch", type=str, default="rtsrn")
-    parser.add_argument("--type", type=str, default="base", choices=["base", "rep"])
+    parser.add_argument("--bicubic", action="store_true")
+    parser.add_argument("--arch", type=str, default="rt4ksr_rep")
     parser.add_argument("--feature-channels", type=int, default=24)
     parser.add_argument("--num-blocks", type=int, default=4)
     parser.add_argument("--act-type", type=str, default="gelu", choices=["relu", "lrelu", "gelu"])
