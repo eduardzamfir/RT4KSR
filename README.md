@@ -6,6 +6,11 @@
 
 Work part of the [NTIRE Real-Time 4K Super-Resolution](https://cvlai.net/ntire/2023/) Challenge @ CVPR 2023 in Vancouver
 
+|  |  |
+|       :---       |     :---:     |
+| <a href="https://openaccess.thecvf.com/content/CVPR2023W/NTIRE/html/Zamfir_Towards_Real-Time_4K_Image_Super-Resolution_CVPRW_2023_paper.html"><img src="images/paper.png" width="200" border="0"></a> | <a href="https://openaccess.thecvf.com/content/CVPR2023W/NTIRE/html/Conde_Efficient_Deep_Models_for_Real-Time_4K_Image_Super-Resolution._NTIRE_2023_CVPRW_2023_paper.html"><img src="images/report.png" width="200" border="0"></a> |
+|  |  |
+
 ----
 <img src="assets/rt4ksr_teaser.png" width="1000" />
 
