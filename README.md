@@ -8,7 +8,7 @@ Work part of the [NTIRE Real-Time 4K Super-Resolution](https://cvlai.net/ntire/2
 
 |  |  |
 |       :---       |     :---:     |
-| <a href="https://openaccess.thecvf.com/content/CVPR2023W/NTIRE/html/Zamfir_Towards_Real-Time_4K_Image_Super-Resolution_CVPRW_2023_paper.html"><img src="images/paper.png" width="200" border="0"></a> | <a href="https://openaccess.thecvf.com/content/CVPR2023W/NTIRE/html/Conde_Efficient_Deep_Models_for_Real-Time_4K_Image_Super-Resolution._NTIRE_2023_CVPRW_2023_paper.html"><img src="images/report.png" width="200" border="0"></a> |
+| <a href="https://openaccess.thecvf.com/content/CVPR2023W/NTIRE/html/Zamfir_Towards_Real-Time_4K_Image_Super-Resolution_CVPRW_2023_paper.html"><img src="assets/paper.png" width="200" border="0"></a> | <a href="https://openaccess.thecvf.com/content/CVPR2023W/NTIRE/html/Conde_Efficient_Deep_Models_for_Real-Time_4K_Image_Super-Resolution._NTIRE_2023_CVPRW_2023_paper.html"><img src="assets/report.png" width="200" border="0"></a> |
 |  |  |
 
 ----
