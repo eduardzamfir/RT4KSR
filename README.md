@@ -69,3 +69,16 @@ python code/test.py --dataroot [DATAROOT] --checkpoint-id rt4ksr_[x2|x3] --scale
 |         | x3 (720p -> 4K)  | 31.302   | 33.812  |  0.8246    | 0.8656   |
 | RT4KSR  | x2 (1080p -> 4K) | 34.193   | 37.013  | 0.8848     | 0.9180   |              
 |         | x3 (720p -> 4K)  | 31.721   | 34.349  | 0.8300     | 0.8715   |
+
+---
+## Citation
+```
+@InProceedings{Zamfir_2023_CVPR,
+    author    = {Zamfir, Eduard and Conde, Marcos V. and Timofte, Radu},
+    title     = {Towards Real-Time 4K Image Super-Resolution},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops},
+    month     = {June},
+    year      = {2023},
+    pages     = {1522-1532}
+}
+```
